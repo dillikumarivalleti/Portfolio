@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import { EnvelopeIcon, PhoneIcon, MapPinIcon, DocumentArrowDownIcon } from '@heroicons/react/24/outline'
 
 export default function Contact() {
   const contactInfo = [
@@ -52,6 +52,24 @@ export default function Contact() {
         <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">
           I&apos;m always open to discussing new opportunities, creative ideas, or ways to make things better.
         </p>
+      </motion.div>
+
+      {/* Resume Download Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-center mb-12"
+      >
+        <a
+          href="https://docs.google.com/document/d/17__oK1sXbukpQRySGl2KAMKEMTE0Kfb5NMO8TMx8hSw/edit?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#64ffda] text-[#0a192f] px-6 py-3 rounded-lg font-medium hover:bg-[#64ffda]/90 transition-colors duration-300"
+        >
+          <DocumentArrowDownIcon className="w-5 h-5" />
+          View Resume
+        </a>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
