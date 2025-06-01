@@ -7,6 +7,7 @@ import Experience from '@/components/Experience'
 import Contact from '@/components/Contact'
 import Skills from '@/components/Skills'
 import Certificates from '@/components/Certificates'
+import Loader from '@/components/Loader'
 import { backgroundElements } from '@/utils/animations'
 import { 
   HomeIcon, 
@@ -170,116 +171,119 @@ export default function Home() {
   ]
 
   return (
-    <main 
-      ref={containerRef} 
-      className="relative h-screen overflow-y-scroll bg-[#0a192f] no-scrollbar scroll-smooth"
-    >
-      {/* Parallax Background Elements */}
-      {!isMobile && !isTablet && (
-        <motion.div 
-          className="fixed inset-0 pointer-events-none opacity-20"
-          style={{ y: backgroundY }}
-          variants={backgroundElements}
-          initial="initial"
-          animate="animate"
+    <>
+      <Loader />
+      <main 
+        ref={containerRef} 
+        className="relative h-screen overflow-y-scroll bg-[#0a192f] no-scrollbar scroll-smooth"
+      >
+        {/* Parallax Background Elements */}
+        {!isMobile && !isTablet && (
+          <motion.div 
+            className="fixed inset-0 pointer-events-none opacity-20"
+            style={{ y: backgroundY }}
+            variants={backgroundElements}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.div 
+              className="absolute top-1/4 left-1/4 text-[#64ffda]/5 text-8xl lg:text-7xl"
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              &lt;/&gt;
+            </motion.div>
+            <motion.div 
+              className="absolute bottom-1/4 right-1/3 text-[#64ffda]/5 text-6xl lg:text-5xl"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            >
+              &lt;Dev/&gt;
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Navigation Dots - Hidden on very small screens */}
+        <div 
+          className={`fixed z-50 transition-all duration-300 ease-in-out
+            ${isMobile 
+              ? 'bottom-4 left-1/2 -translate-x-1/2 flex space-x-3 md:space-x-4' 
+              : 'right-4 lg:right-8 top-1/2 -translate-y-1/2 space-y-3 md:space-y-4'}
+            ${isVerySmallScreen ? 'opacity-0 pointer-events-none' : 'opacity-100'}
+          `}
         >
-          <motion.div 
-            className="absolute top-1/4 left-1/4 text-[#64ffda]/5 text-8xl lg:text-7xl"
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            &lt;/&gt;
-          </motion.div>
-          <motion.div 
-            className="absolute bottom-1/4 right-1/3 text-[#64ffda]/5 text-6xl lg:text-5xl"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          >
-            &lt;Dev/&gt;
-          </motion.div>
-        </motion.div>
-      )}
-
-      {/* Navigation Dots - Hidden on very small screens */}
-      <div 
-        className={`fixed z-50 transition-all duration-300 ease-in-out
-          ${isMobile 
-            ? 'bottom-4 left-1/2 -translate-x-1/2 flex space-x-3 md:space-x-4' 
-            : 'right-4 lg:right-8 top-1/2 -translate-y-1/2 space-y-3 md:space-y-4'}
-          ${isVerySmallScreen ? 'opacity-0 pointer-events-none' : 'opacity-100'}
-        `}
-      >
-        {sections.map((section) => (
-          <motion.a
-            key={section.id}
-            href={`#${section.id}`}
-            onClick={(e) => handleNavClick(e, section.id)}
-            className="nav-dot-container relative flex items-center group"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <div 
-              className={`nav-dot ${activeSection === section.id ? 'active' : ''}`}
-              aria-label={section.label}
-            />
-            
-            {!isMobile && !isTablet && (
-              <div className="nav-hover-card">
-                <div className="icon-container">
-                  {section.icon}
+          {sections.map((section) => (
+            <motion.a
+              key={section.id}
+              href={`#${section.id}`}
+              onClick={(e) => handleNavClick(e, section.id)}
+              className="nav-dot-container relative flex items-center group"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div 
+                className={`nav-dot ${activeSection === section.id ? 'active' : ''}`}
+                aria-label={section.label}
+              />
+              
+              {!isMobile && !isTablet && (
+                <div className="nav-hover-card">
+                  <div className="icon-container">
+                    {section.icon}
+                  </div>
+                  <div className="content">
+                    <p className="title">{section.label}</p>
+                  </div>
                 </div>
-                <div className="content">
-                  <p className="title">{section.label}</p>
-                </div>
-              </div>
-            )}
-          </motion.a>
-        ))}
-      </div>
+              )}
+            </motion.a>
+          ))}
+        </div>
 
-      {/* Scroll to Top Button */}
-      <motion.button
-        className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
-        onClick={scrollToTop}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Scroll to top"
-        title="Scroll to top"
-      >
-        <ArrowUpIcon className="w-6 h-6" />
-      </motion.button>
+        {/* Scroll to Top Button */}
+        <motion.button
+          className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
+          onClick={scrollToTop}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="Scroll to top"
+          title="Scroll to top"
+        >
+          <ArrowUpIcon className="w-6 h-6" />
+        </motion.button>
 
-      {/* Content Sections */}
-      <div id="home" className="section min-h-screen">
-        <div className="content-container">
-          <Hero />
+        {/* Content Sections */}
+        <div id="home" className="section min-h-screen">
+          <div className="content-container">
+            <Hero />
+          </div>
         </div>
-      </div>
-      <div id="about" className="section min-h-screen">
-        <div className="content-container">
-          <About />
+        <div id="about" className="section min-h-screen">
+          <div className="content-container">
+            <About />
+          </div>
         </div>
-      </div>
-      <div id="experience" className="section min-h-screen">
-        <div className="content-container">
-          <Experience />
+        <div id="experience" className="section min-h-screen">
+          <div className="content-container">
+            <Experience />
+          </div>
         </div>
-      </div>
-      <div id="skills" className="section min-h-screen">
-        <div className="content-container">
-          <Skills />
+        <div id="skills" className="section min-h-screen">
+          <div className="content-container">
+            <Skills />
+          </div>
         </div>
-      </div>
-      <div id="certificates" className="section min-h-screen">
-        <div className="content-container">
-          <Certificates />
+        <div id="certificates" className="section min-h-screen">
+          <div className="content-container">
+            <Certificates />
+          </div>
         </div>
-      </div>
-      <div id="contact" className="section min-h-screen">
-        <div className="content-container">
-          <Contact />
+        <div id="contact" className="section min-h-screen">
+          <div className="content-container">
+            <Contact />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
