@@ -14,7 +14,7 @@ export default function Loader() {
     "    firstName: 'Valleti',",
     "    middleName: 'Dilli',",
     "    lastName: 'Kumari',",
-    "    role: 'QA & Automation Specialist',",
+    "    role: 'QA & Automation ',",
     "    expertise: ['Automation', 'Testing', 'Quality Assurance'],",
     "    status: 'Initializing Portfolio...'",
     "  }",

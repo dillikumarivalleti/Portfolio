@@ -7,6 +7,21 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Valleti Dilli Kumari - QA & Automation Specialist",
   description: "Portfolio of Valleti Dilli Kumari, a QA & Automation Specialist based in Bengaluru",
+  icons: {
+    icon: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      }
+    ],
+    shortcut: ["/favicon.svg"],
+    apple: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      }
+    ],
+  },
 };
 
 export default function RootLayout({
