@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
     --accent: #64ffda;
-  }
+}
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #0a0a0a;
-      --foreground: #ededed;
-    }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
+}
 
   /* Base Styles */
   html {
@@ -22,9 +22,8 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  body {
-    background-color: #0a192f;
-    color: rgb(209 213 219);
+body {
+    @apply bg-[#0a192f] text-gray-300;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -35,61 +34,76 @@
 @layer components {
   /* Content Container */
   .content-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  @media (min-width: 768px) {
-    .content-container {
-      padding: 2rem;
-    }
+    @apply w-full max-w-[1200px] mx-auto px-4 md:px-8;
   }
 
   /* Section Styles */
   .section {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 0;
+    @apply min-h-screen w-full flex items-center justify-center py-8 md:py-16;
   }
-  @media (min-width: 768px) {
-    .section {
-      padding: 4rem 0;
-    }
+
+  /* Experience Section */
+  .experience-section {
+    @apply min-h-screen w-full flex flex-col justify-center py-4 md:py-8;
+    height: 100vh;
+  }
+
+  .experience-container {
+    @apply w-full max-w-[1200px] mx-auto px-4 md:px-8;
+    height: calc(100vh - 2rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .experience-content {
+    @apply flex-1 overflow-y-auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .experience-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .experience-grid {
+    @apply grid gap-4 md:gap-6;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    height: fit-content;
+  }
+
+  .experience-card {
+    @apply bg-[#112240] p-4 md:p-6 rounded-lg;
+    height: fit-content;
   }
 
   /* Navigation Dots */
   .nav-dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 9999px;
-    border: 2px solid #64ffda;
-    transition: all 0.3s;
-  }
-  @media (min-width: 768px) {
-    .nav-dot {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
+    @apply w-2 h-2 md:w-3 md:h-3 rounded-full border-2 border-[#64ffda] transition-all duration-300;
   }
 
   .nav-dot.active {
-    background-color: #64ffda;
-    transform: scale(1.1);
+    @apply bg-[#64ffda] scale-110;
   }
 
   .nav-dot-container {
-    position: relative;
-    cursor: pointer;
-    padding: 0.5rem;
-    margin: -0.5rem;
+    @apply relative cursor-pointer p-2 -m-2;
   }
 }
 
 @layer utilities {
+  /* Scroll to Top Button */
+  .scroll-to-top {
+    @apply fixed bottom-6 right-6 bg-[#112240] border-2 border-[#64ffda] text-[#64ffda] 
+           w-12 h-12 rounded-full flex items-center justify-center cursor-pointer 
+           transition-all duration-300 opacity-0 translate-y-4 z-50;
+    visibility: hidden;
+  }
+
+  .scroll-to-top.show {
+    @apply opacity-100 translate-y-0;
+    visibility: visible;
+  }
+
   /* Touch Device Optimizations */
   @media (hover: none) {
     .nav-hover-card {
@@ -97,7 +111,7 @@
     }
     
     .nav-dot-container {
-      padding: 0.75rem;
+      @apply p-3;
     }
   }
 }
@@ -174,12 +188,13 @@ p {
 }
 
 /* Utility Classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .no-scrollbar {
-  /* Hide scrollbar for all browsers */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  overflow: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Grid Layout */
@@ -198,6 +213,18 @@ p {
   .nav-dot-container {
     transform: scale(0.9);
   }
+
+  .experience-section {
+    padding: 1rem 0;
+  }
+
+  .experience-container {
+    height: calc(100vh - 1rem);
+  }
+
+  .experience-card {
+    padding: 1rem;
+  }
 }
 
 /* Small Screen Optimizations */
@@ -208,6 +235,20 @@ p {
   
   .content-container {
     padding: 0.75rem;
+  }
+
+  .experience-section {
+    padding: 0.5rem 0;
+  }
+
+  .experience-container {
+    padding: 0.5rem;
+    height: calc(100vh - 0.5rem);
+  }
+
+  .experience-grid {
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
   }
 }
 

@@ -1,7 +1,6 @@
 'use client'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Experience from '@/components/Experience'
@@ -27,8 +26,6 @@ export default function Home() {
   const [isTablet, setIsTablet] = useState(false)
   const [isVerySmallScreen, setIsVerySmallScreen] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -61,25 +58,25 @@ export default function Home() {
     })
   }
 
-  // Handle initial scroll position
+  // Scroll to home on page load/refresh
   useEffect(() => {
-    // Get the hash from the URL (e.g., #about, #experience)
-    const hash = window.location.hash;
-    
-    if (hash) {
-      // Remove the # from the hash
-      const id = hash.replace('#', '');
-      const element = document.getElementById(id);
-      
-      if (element) {
-        // Scroll to the element with smooth behavior
-        element.scrollIntoView({ behavior: 'smooth' });
+    // Small delay to ensure smooth scrolling after page load
+    const timer = setTimeout(() => {
+      const homeSection = document.getElementById('home')
+      if (homeSection) {
+        homeSection.scrollIntoView({ behavior: 'smooth' })
       }
-    } else {
-      // If no hash, scroll to top
-      window.scrollTo(0, 0);
-    }
-  }, [pathname]);
+      // Also handle URL hash if present
+      if (window.location.hash) {
+        const targetSection = document.querySelector(window.location.hash)
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' })
+        }
+      }
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   // Handle resize for responsive design
   useEffect(() => {
@@ -285,7 +282,7 @@ export default function Home() {
           <div className="content-container">
             <Contact />
           </div>
-        </div>
+    </div>
       </main>
     </>
   )
